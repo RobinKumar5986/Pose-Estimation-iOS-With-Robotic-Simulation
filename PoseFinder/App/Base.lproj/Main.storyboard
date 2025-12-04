@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16095" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16084.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24405"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -61,7 +63,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BtZ-RJ-x8n">
-                                <rect key="frame" x="315.66666666666669" y="56" width="29.333333333333314" height="36.333333333333343"/>
+                                <rect key="frame" x="313.33333333333331" y="111.99999999999999" width="31.666666666666686" height="39.333333333333329"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="BtZ-RJ-x8n" secondAttribute="height" multiplier="29:36" id="rfo-h7-Zrd"/>
@@ -76,8 +78,8 @@
                                     <action selector="onCameraButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5dj-RN-msI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4t-1N-oJy">
-                                <rect key="frame" x="102" y="727" width="171" height="36"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4t-1N-oJy">
+                                <rect key="frame" x="101.66666666666669" y="693" width="172" height="36"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <state key="normal" title="Open Configuration">
                                     <color key="titleColor" red="0.92453204310000003" green="0.92453204310000003" blue="0.92453204310000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -87,7 +89,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="ArZ-44-lD1" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="2Jo-v1-F6T"/>
                             <constraint firstItem="8o7-cd-AQr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="5kX-v9-7Op"/>
@@ -108,6 +110,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cameraButton" destination="BtZ-RJ-x8n" id="9Vz-N5-L1p"/>
+                        <outlet property="configurationButton" destination="c4t-1N-oJy" id="aiw-ay-Kc1"/>
                         <outlet property="previewImageView" destination="ArZ-44-lD1" id="nT5-Yu-T3h"/>
                     </connections>
                 </viewController>
@@ -124,14 +128,14 @@
                         <viewControllerLayoutGuide type="bottom" id="ghm-wI-o6z"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dmH-0u-zuB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="702"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="708"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hzI-AJ-je0">
-                                <rect key="frame" x="8" y="10" width="359" height="650"/>
+                                <rect key="frame" x="8" y="26" width="359" height="640"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="CCT-PI-AGH">
-                                        <rect key="frame" x="0.0" y="0.0" width="359" height="650"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="640"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Algorithm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uFs-sP-dzI">
                                                 <rect key="frame" x="0.0" y="0.0" width="359" height="20.333333333333332"/>
@@ -140,7 +144,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pg8-h0-HMM">
-                                                <rect key="frame" x="0.0" y="52" width="359" height="32"/>
+                                                <rect key="frame" x="0.0" y="49" width="359" height="32"/>
                                                 <segments>
                                                     <segment title="Single Pose"/>
                                                     <segment title="Multiple Poses"/>
@@ -150,61 +154,61 @@
                                                 </connections>
                                             </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joint confidence threshold" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQa-ma-8Pl">
-                                                <rect key="frame" x="0.0" y="114.33333333333331" width="359" height="20.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="109" width="359" height="20.333333333333343"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.20000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="yec-fb-nwY">
-                                                <rect key="frame" x="-2" y="166.33333333333331" width="363" height="31"/>
+                                                <rect key="frame" x="0.0" y="158" width="359" height="34"/>
                                                 <connections>
                                                     <action selector="jointConfidenceThresholdValueChanged:" destination="CKo-Rm-U0e" eventType="valueChanged" id="Tq9-vW-9Au"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pose confidence threshold" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NHo-oq-ugc">
-                                                <rect key="frame" x="0.0" y="228" width="359" height="20.333333333333343"/>
+                                                <rect key="frame" x="0.0" y="221" width="359" height="20.333333333333343"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.20000000000000001" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="pfZ-Ns-bXP">
-                                                <rect key="frame" x="-2" y="279.66666666666669" width="363" height="31"/>
+                                                <rect key="frame" x="0.0" y="270" width="359" height="34"/>
                                                 <connections>
                                                     <action selector="poseConfidenceThresholdValueChanged:" destination="CKo-Rm-U0e" eventType="valueChanged" id="FR6-qS-5mR"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Local joint search radius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70r-uT-rCj">
-                                                <rect key="frame" x="0.0" y="341.33333333333337" width="359" height="20.333333333333314"/>
+                                                <rect key="frame" x="0.0" y="333" width="359" height="20.333333333333314"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="3" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="5Ja-Ic-anG">
-                                                <rect key="frame" x="-2" y="393" width="363" height="31"/>
+                                                <rect key="frame" x="0.0" y="382" width="359" height="34"/>
                                                 <connections>
                                                     <action selector="localJointSearchRadiusValueChanged:" destination="CKo-Rm-U0e" eventType="valueChanged" id="mwz-Zd-L4l"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Matching joint minimum distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEB-ON-7pv">
-                                                <rect key="frame" x="0.0" y="454.66666666666663" width="359" height="20.333333333333314"/>
+                                                <rect key="frame" x="0.0" y="445" width="359" height="20.333333333333314"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="35" minValue="0.0" maxValue="100" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GQv-Wk-5sA">
-                                                <rect key="frame" x="-2" y="506.66666666666674" width="363" height="31"/>
+                                                <rect key="frame" x="0.0" y="494" width="359" height="34"/>
                                                 <connections>
                                                     <action selector="matchingJointMinimumDistanceValueChanged:" destination="CKo-Rm-U0e" eventType="valueChanged" id="f12-4d-jK3"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of offset refine steps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ccq-AW-sJC" userLabel="offsetRefineStepsLabel">
-                                                <rect key="frame" x="0.0" y="568" width="359" height="20.333333333333371"/>
+                                                <rect key="frame" x="0.0" y="557" width="359" height="20.333333333333371"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="0.0" maxValue="7" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2o-6j-dI7">
-                                                <rect key="frame" x="-2" y="620" width="363" height="31"/>
+                                                <rect key="frame" x="0.0" y="606" width="359" height="34"/>
                                                 <connections>
                                                     <action selector="offsetRefineStepsValueChanged:" destination="CKo-Rm-U0e" eventType="valueChanged" id="T7i-4P-1bB"/>
                                                 </connections>
@@ -225,7 +229,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="DEP-B8-qqM"/>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="hzI-AJ-je0" secondAttribute="trailing" constant="8" id="X97-z4-HRG"/>
                             <constraint firstItem="hzI-AJ-je0" firstAttribute="top" secondItem="ser-Jd-2f9" secondAttribute="bottom" constant="10" id="ayb-iU-TJ6"/>
@@ -266,7 +270,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pL4-M0-HM5" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lxf-y5-AbB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="16" width="375" height="54"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -280,12 +284,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="camera.rotate.fill" catalog="system" width="128" height="96"/>
+        <image name="camera.rotate.fill" catalog="system" width="128" height="93"/>
         <namedColor name="JointColor">
             <color red="0.55699998140335083" green="0.82700002193450928" blue="0.77999997138977051" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="SegmentColor">
             <color red="0.51800000667572021" green="0.36899998784065247" blue="0.76099997758865356" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

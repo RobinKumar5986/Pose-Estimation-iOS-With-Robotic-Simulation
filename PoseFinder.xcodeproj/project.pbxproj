@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -30,10 +30,14 @@
 		4AE8C3CF23AD2A74005F9953 /* CGImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8C3CE23AD2A74005F9953 /* CGImage+Extension.swift */; };
 		4AE8C3D123AD2D3B005F9953 /* PoseNetInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8C3D023AD2D3B005F9953 /* PoseNetInput.swift */; };
 		4AE8C3D323AD2D8A005F9953 /* PoseNetOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8C3D223AD2D8A005F9953 /* PoseNetOutput.swift */; };
+		6A5E74782EDD780E00F6D1C0 /* Simulate3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E74772EDD780E00F6D1C0 /* Simulate3D.swift */; };
+		6AC7316B2ED9A1E800717146 /* light.hdr in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7316A2ED9A1E800717146 /* light.hdr */; };
+		6AC9E30D2ED996CE00E62374 /* GLTFKit2 in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC9E30C2ED996CE00E62374 /* GLTFKit2 */; };
+		6AD381E52EDD7AE500470345 /* PoseDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD381E42EDD7AE500470345 /* PoseDataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0563E980FDE557646F54ED8A /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.txt; sourceTree = "<group>"; };
+		0563E980FDE557646F54ED8A /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		0D4BB83E249769C800076D64 /* PoseNetMobileNet075S16FP16.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = PoseNetMobileNet075S16FP16.mlmodel; sourceTree = "<group>"; };
 		0DCEF2C6241666CA00ECEC99 /* PoseBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseBuilder.swift; sourceTree = "<group>"; };
 		0DCEF2C82416701D00ECEC99 /* PoseBuilder+Single.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PoseBuilder+Single.swift"; sourceTree = "<group>"; };
@@ -60,7 +64,10 @@
 		4AE8C3D023AD2D3B005F9953 /* PoseNetInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseNetInput.swift; sourceTree = "<group>"; };
 		4AE8C3D223AD2D8A005F9953 /* PoseNetOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseNetOutput.swift; sourceTree = "<group>"; };
 		57C02DF057C02B4000000001 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		BEE6CF152B804A05BF905D20 /* SampleCode.xcconfig */ = {isa = PBXFileReference; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
+		6A5E74772EDD780E00F6D1C0 /* Simulate3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simulate3D.swift; sourceTree = "<group>"; };
+		6AC7316A2ED9A1E800717146 /* light.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = light.hdr; sourceTree = "<group>"; };
+		6AD381E42EDD7AE500470345 /* PoseDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseDataStore.swift; sourceTree = "<group>"; };
+		BEE6CF152B804A05BF905D20 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AC9E30D2ED996CE00E62374 /* GLTFKit2 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,7 +88,6 @@
 				0563E980FDE557646F54ED8A /* LICENSE.txt */,
 			);
 			name = LICENSE;
-			path = "";
 			sourceTree = "<group>";
 		};
 		0DCEF2CC241675C200ECEC99 /* Pose */ = {
@@ -126,6 +133,7 @@
 		4A2D23B022BB70E400494C55 /* PoseFinder */ = {
 			isa = PBXGroup;
 			children = (
+				6AC7316A2ED9A1E800717146 /* light.hdr */,
 				0DCEF2CC241675C200ECEC99 /* Pose */,
 				6594E51B23454C4100D3C44D /* Model */,
 				4AFBF15322CC9A1900A4B11A /* Extensions+Types */,
@@ -139,6 +147,7 @@
 		4AFBF15222CC9A1300A4B11A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6AD381E42EDD7AE500470345 /* PoseDataStore.swift */,
 				4AA5C4B722BB9CC200277977 /* VideoCapture.swift */,
 				4ADE4C8B2346C07300FFD895 /* AVCaptureVideoOrientation+Extension.swift */,
 			);
@@ -174,6 +183,7 @@
 				4A6C8A8123E84D1D0080886A /* GradientOverlayView.swift */,
 				4A2D05CD23BF9A2C00D002ED /* ConfigurationViewController.swift */,
 				4A2D05CF23BF9BBF00D002ED /* PopOverModalViewController.swift */,
+				6A5E74772EDD780E00F6D1C0 /* Simulate3D.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -233,6 +243,9 @@
 				Base,
 			);
 			mainGroup = 4A2D23A522BB70E400494C55;
+			packageReferences = (
+				6AC9E30B2ED996CE00E62374 /* XCRemoteSwiftPackageReference "GLTFKit2" */,
+			);
 			productRefGroup = 4A2D23AF22BB70E400494C55 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -248,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A2D23BE22BB70E500494C55 /* LaunchScreen.storyboard in Resources */,
+				6AC7316B2ED9A1E800717146 /* light.hdr in Resources */,
 				4A2D23BB22BB70E500494C55 /* Assets.xcassets in Resources */,
 				4A2D23B922BB70E400494C55 /* Main.storyboard in Resources */,
 			);
@@ -274,12 +288,14 @@
 				4AE8C3D123AD2D3B005F9953 /* PoseNetInput.swift in Sources */,
 				4AA5C4BA22BBBC2A00277977 /* PoseNet.swift in Sources */,
 				4AE8C3D323AD2D8A005F9953 /* PoseNetOutput.swift in Sources */,
+				6AD381E52EDD7AE500470345 /* PoseDataStore.swift in Sources */,
 				0DCEF2CE241676C000ECEC99 /* PoseBuilderConfiguration.swift in Sources */,
 				4ADD52F822BBCF580008FAAC /* Joint.swift in Sources */,
 				4ADE4C8C2346C07300FFD895 /* AVCaptureVideoOrientation+Extension.swift in Sources */,
 				4AE8C3CB23ACDF1C005F9953 /* PoseImageView.swift in Sources */,
 				0D4BB83F249769C800076D64 /* PoseNetMobileNet075S16FP16.mlmodel in Sources */,
 				4A2D23B222BB70E400494C55 /* AppDelegate.swift in Sources */,
+				6A5E74782EDD780E00F6D1C0 /* Simulate3D.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,7 +445,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = KJR4ME6C55;
 				INFOPLIST_FILE = PoseFinder/App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -449,7 +465,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = KJR4ME6C55;
 				INFOPLIST_FILE = PoseFinder/App/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -485,6 +501,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6AC9E30B2ED996CE00E62374 /* XCRemoteSwiftPackageReference "GLTFKit2" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/warrenm/GLTFKit2";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.15;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6AC9E30C2ED996CE00E62374 /* GLTFKit2 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AC9E30B2ED996CE00E62374 /* XCRemoteSwiftPackageReference "GLTFKit2" */;
+			productName = GLTFKit2;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4A2D23A622BB70E400494C55 /* Project object */;
 }

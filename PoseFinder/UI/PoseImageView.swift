@@ -44,47 +44,119 @@ class PoseImageView: UIImageView {
     /// The color of the circles drawn for each joint.
     @IBInspectable var jointColor: UIColor = UIColor.systemPink
 
+
+    private func clearOldAngleLayers() {
+        layer.sublayers?.removeAll(where: { $0 is CATextLayer })
+    }
+
+
     // MARK: - Rendering methods
 
     /// Returns an image showing the detected poses.
     ///
     /// - parameters:
     ///     - poses: An array of detected poses.
+    ///     - angles: Angle dictionary for each pose.
     ///     - frame: The image used to detect the poses and used as the background for the returned image.
-    func show(poses: [Pose], on frame: CGImage) {
+    func show(poses: [Pose], angles: [[String: CGFloat]], on frame: CGImage) {
+        
+        clearOldAngleLayers()
+        
         let dstImageSize = CGSize(width: frame.width, height: frame.height)
         let dstImageFormat = UIGraphicsImageRendererFormat()
-
+        
         dstImageFormat.scale = 1
         let renderer = UIGraphicsImageRenderer(size: dstImageSize,
                                                format: dstImageFormat)
-
+        
         let dstImage = renderer.image { rendererContext in
             // Draw the current frame as the background for the new image.
             draw(image: frame, in: rendererContext.cgContext)
-
-            for pose in poses {
-                // Draw the segment lines.
+            
+            for (index, pose) in poses.enumerated() {
+                let angleDict = angles[index]
+                
+                // MARK: - Draw skeleton lines
                 for segment in PoseImageView.jointSegments {
                     let jointA = pose[segment.jointA]
                     let jointB = pose[segment.jointB]
-
-                    guard jointA.isValid, jointB.isValid else {
-                        continue
-                    }
-
+                    
+                    guard jointA.isValid, jointB.isValid else { continue }
+                    
                     drawLine(from: jointA,
                              to: jointB,
                              in: rendererContext.cgContext)
                 }
-
-                // Draw the joints as circles above the segment lines.
-                for joint in pose.joints.values.filter({ $0.isValid }) {
+                
+                // MARK: - Draw joint circles
+                for joint in pose.joints.values where joint.isValid {
                     draw(circle: joint, in: rendererContext.cgContext)
                 }
+                
+                // Helper to get a joint position quickly
+                func point(_ name: Joint.Name) -> CGPoint? {
+                    pose.joints[name]?.position
+                }
+                
+                // Offsets – tweak these if labels overlap too much
+                let offsetX: CGFloat = -25
+                let offsetY: CGFloat = -25
+                
+                // MARK: - Shoulder angles
+                if let s = point(.leftShoulder), let angle = angleDict["leftShoulder"] {
+                    drawAngle(text: "\(Int(angle))° Ls",
+                              at: CGPoint(x: s.x + offsetX, y: s.y + offsetY),
+                              jointName: "leftShoulder")
+                }
+                if let s = point(.rightShoulder), let angle = angleDict["rightShoulder"] {
+                    drawAngle(text: "\(Int(angle))° Rs",
+                              at: CGPoint(x: s.x + offsetX, y: s.y + offsetY),
+                              jointName: "rightShoulder")
+                }
+
+                
+                // MARK: - Elbow angles
+                if let e = point(.leftElbow), let angle = angleDict["leftElbow"] {
+                    drawAngle(text: "\(Int(angle))° Le",
+                              at: CGPoint(x: e.x + offsetX, y: e.y + offsetY),
+                              jointName: "leftElbow")
+                }
+                if let e = point(.rightElbow), let angle = angleDict["rightElbow"] {
+                    drawAngle(text: "\(Int(angle))° Re",
+                              at: CGPoint(x: e.x + offsetX, y: e.y + offsetY),
+                              jointName: "rightElbow")
+                }
+
+                
+                // MARK: - Hip angles
+                if let h = point(.leftHip), let angle = angleDict["leftHip"] {
+                    drawAngle(text: "\(Int(angle))° Lh",
+                              at: CGPoint(x: h.x + offsetX, y: h.y + 40),
+                              jointName: "leftHip")
+                }
+                if let h = point(.rightHip), let angle = angleDict["rightHip"] {
+                    drawAngle(text: "\(Int(angle))° Rh",
+                              at: CGPoint(x: h.x + offsetX, y: h.y + 40),
+                              jointName: "rightHip")
+                }
+
+                
+                // MARK: - Knee angles
+                if let k = point(.leftKnee), let angle = angleDict["leftKnee"] {
+                    drawAngle(text: "\(Int(angle))° Ln",
+                              at: CGPoint(x: k.x + offsetX, y: k.y + 45),
+                              jointName: "leftKnee")
+                }
+                if let k = point(.rightKnee), let angle = angleDict["rightKnee"] {
+                    drawAngle(text: "\(Int(angle))° Rn",
+                              at: CGPoint(x: k.x + offsetX, y: k.y + 45),
+                              jointName: "rightKnee")
+                }
+
+                
             }
         }
-
+        
         image = dstImage
     }
 
@@ -134,4 +206,37 @@ class PoseImageView: UIImageView {
         cgContext.addEllipse(in: rectangle)
         cgContext.drawPath(using: .fill)
     }
+
+    func drawAngle(text: String,
+                   at point: CGPoint,
+                   jointName: String?) {
+
+        let textLayer = CATextLayer()
+        textLayer.string = text
+        textLayer.fontSize = 15
+        textLayer.foregroundColor = UIColor.red.cgColor
+        textLayer.backgroundColor = UIColor.clear.cgColor
+        textLayer.alignmentMode = .center
+        textLayer.contentsScale = UIScreen.main.scale
+        
+        let size = CGSize(width: 50, height: 24)
+
+        var yOffset: CGFloat = 80
+
+        if let name = jointName,
+           name == "leftHip" || name == "rightHip" ||
+           name == "leftKnee" || name == "rightKnee" {
+            yOffset = 120
+        }
+
+        textLayer.frame = CGRect(
+            x: point.x - size.width / 2,
+            y: point.y - size.height / 2 - yOffset,
+            width: size.width,
+            height: size.height
+        )
+
+        layer.addSublayer(textLayer)
+    }
+
 }
