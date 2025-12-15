@@ -16,7 +16,6 @@
 		4A2D05CE23BF9A2C00D002ED /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2D05CD23BF9A2C00D002ED /* ConfigurationViewController.swift */; };
 		4A2D05D023BF9BBF00D002ED /* PopOverModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2D05CF23BF9BBF00D002ED /* PopOverModalViewController.swift */; };
 		4A2D23B222BB70E400494C55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2D23B122BB70E400494C55 /* AppDelegate.swift */; };
-		4A2D23B622BB70E400494C55 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2D23B522BB70E400494C55 /* ViewController.swift */; };
 		4A2D23B922BB70E400494C55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A2D23B722BB70E400494C55 /* Main.storyboard */; };
 		4A2D23BB22BB70E500494C55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A2D23BA22BB70E500494C55 /* Assets.xcassets */; };
 		4A2D23BE22BB70E500494C55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A2D23BC22BB70E500494C55 /* LaunchScreen.storyboard */; };
@@ -30,6 +29,13 @@
 		4AE8C3CF23AD2A74005F9953 /* CGImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8C3CE23AD2A74005F9953 /* CGImage+Extension.swift */; };
 		4AE8C3D123AD2D3B005F9953 /* PoseNetInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8C3D023AD2D3B005F9953 /* PoseNetInput.swift */; };
 		4AE8C3D323AD2D8A005F9953 /* PoseNetOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE8C3D223AD2D8A005F9953 /* PoseNetOutput.swift */; };
+		6A2CE2592EEC446A009D1FCC /* BlueToothManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2CE2532EEC446A009D1FCC /* BlueToothManagerDelegate.swift */; };
+		6A2CE25A2EEC446A009D1FCC /* BlueToothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2CE2572EEC446A009D1FCC /* BlueToothManager.swift */; };
+		6A2CE25B2EEC446A009D1FCC /* SharedPreferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2CE2552EEC446A009D1FCC /* SharedPreferenceManager.swift */; };
+		6A2CE25F2EEC4483009D1FCC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2CE25E2EEC4483009D1FCC /* ViewController.swift */; };
+		6A2CE2622EEC449E009D1FCC /* DeviceConnectScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2CE2612EEC449E009D1FCC /* DeviceConnectScreen.swift */; };
+		6A2CE2632EEC449E009D1FCC /* BlueToothScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2CE2602EEC449E009D1FCC /* BlueToothScreen.swift */; };
+		6A2CE2652EEC44A7009D1FCC /* BLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2CE2642EEC44A7009D1FCC /* BLEDevice.swift */; };
 		6A5E74782EDD780E00F6D1C0 /* Simulate3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E74772EDD780E00F6D1C0 /* Simulate3D.swift */; };
 		6AC7316B2ED9A1E800717146 /* light.hdr in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7316A2ED9A1E800717146 /* light.hdr */; };
 		6AC9E30D2ED996CE00E62374 /* GLTFKit2 in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC9E30C2ED996CE00E62374 /* GLTFKit2 */; };
@@ -48,7 +54,6 @@
 		4A2D05CF23BF9BBF00D002ED /* PopOverModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopOverModalViewController.swift; sourceTree = "<group>"; };
 		4A2D23AE22BB70E400494C55 /* PoseFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PoseFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A2D23B122BB70E400494C55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4A2D23B522BB70E400494C55 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4A2D23B822BB70E400494C55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4A2D23BA22BB70E500494C55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A2D23BD22BB70E500494C55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -64,6 +69,13 @@
 		4AE8C3D023AD2D3B005F9953 /* PoseNetInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseNetInput.swift; sourceTree = "<group>"; };
 		4AE8C3D223AD2D8A005F9953 /* PoseNetOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseNetOutput.swift; sourceTree = "<group>"; };
 		57C02DF057C02B4000000001 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		6A2CE2532EEC446A009D1FCC /* BlueToothManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueToothManagerDelegate.swift; sourceTree = "<group>"; };
+		6A2CE2552EEC446A009D1FCC /* SharedPreferenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedPreferenceManager.swift; sourceTree = "<group>"; };
+		6A2CE2572EEC446A009D1FCC /* BlueToothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueToothManager.swift; sourceTree = "<group>"; };
+		6A2CE25E2EEC4483009D1FCC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6A2CE2602EEC449E009D1FCC /* BlueToothScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueToothScreen.swift; sourceTree = "<group>"; };
+		6A2CE2612EEC449E009D1FCC /* DeviceConnectScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectScreen.swift; sourceTree = "<group>"; };
+		6A2CE2642EEC44A7009D1FCC /* BLEDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
 		6A5E74772EDD780E00F6D1C0 /* Simulate3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simulate3D.swift; sourceTree = "<group>"; };
 		6AC7316A2ED9A1E800717146 /* light.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = light.hdr; sourceTree = "<group>"; };
 		6AD381E42EDD7AE500470345 /* PoseDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseDataStore.swift; sourceTree = "<group>"; };
@@ -133,6 +145,9 @@
 		4A2D23B022BB70E400494C55 /* PoseFinder */ = {
 			isa = PBXGroup;
 			children = (
+				6A2CE2542EEC446A009D1FCC /* Delegate */,
+				6A2CE2562EEC446A009D1FCC /* LocalStorage */,
+				6A2CE2582EEC446A009D1FCC /* Manager */,
 				6AC7316A2ED9A1E800717146 /* light.hdr */,
 				0DCEF2CC241675C200ECEC99 /* Pose */,
 				6594E51B23454C4100D3C44D /* Model */,
@@ -178,7 +193,9 @@
 		6594E51A23454A2300D3C44D /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				4A2D23B522BB70E400494C55 /* ViewController.swift */,
+				6A2CE2602EEC449E009D1FCC /* BlueToothScreen.swift */,
+				6A2CE2612EEC449E009D1FCC /* DeviceConnectScreen.swift */,
+				6A2CE25E2EEC4483009D1FCC /* ViewController.swift */,
 				4AE8C3CA23ACDF1C005F9953 /* PoseImageView.swift */,
 				4A6C8A8123E84D1D0080886A /* GradientOverlayView.swift */,
 				4A2D05CD23BF9A2C00D002ED /* ConfigurationViewController.swift */,
@@ -191,12 +208,37 @@
 		6594E51B23454C4100D3C44D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6A2CE2642EEC44A7009D1FCC /* BLEDevice.swift */,
 				0D4BB83E249769C800076D64 /* PoseNetMobileNet075S16FP16.mlmodel */,
 				4AE8C3D023AD2D3B005F9953 /* PoseNetInput.swift */,
 				4AE8C3D223AD2D8A005F9953 /* PoseNetOutput.swift */,
 				4AA5C4B922BBBC2A00277977 /* PoseNet.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		6A2CE2542EEC446A009D1FCC /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				6A2CE2532EEC446A009D1FCC /* BlueToothManagerDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		6A2CE2562EEC446A009D1FCC /* LocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				6A2CE2552EEC446A009D1FCC /* SharedPreferenceManager.swift */,
+			);
+			path = LocalStorage;
+			sourceTree = "<group>";
+		};
+		6A2CE2582EEC446A009D1FCC /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				6A2CE2572EEC446A009D1FCC /* BlueToothManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,8 +316,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A2CE25F2EEC4483009D1FCC /* ViewController.swift in Sources */,
+				6A2CE2652EEC44A7009D1FCC /* BLEDevice.swift in Sources */,
 				4A2D05D023BF9BBF00D002ED /* PopOverModalViewController.swift in Sources */,
 				0DCEF2C92416701D00ECEC99 /* PoseBuilder+Single.swift in Sources */,
+				6A2CE2592EEC446A009D1FCC /* BlueToothManagerDelegate.swift in Sources */,
+				6A2CE2622EEC449E009D1FCC /* DeviceConnectScreen.swift in Sources */,
+				6A2CE2632EEC449E009D1FCC /* BlueToothScreen.swift in Sources */,
+				6A2CE25A2EEC446A009D1FCC /* BlueToothManager.swift in Sources */,
+				6A2CE25B2EEC446A009D1FCC /* SharedPreferenceManager.swift in Sources */,
 				0DCEF2CB2416709B00ECEC99 /* PoseBuilder+Multiple.swift in Sources */,
 				0DCEF2C7241666CA00ECEC99 /* PoseBuilder.swift in Sources */,
 				4A6C8A8223E84D1D0080886A /* GradientOverlayView.swift in Sources */,
@@ -284,7 +333,6 @@
 				4A0FC5BC23190AD6004886B9 /* CGPoint+Extension.swift in Sources */,
 				4A2D05CE23BF9A2C00D002ED /* ConfigurationViewController.swift in Sources */,
 				4A97FA952350ABDE00255C7F /* Pose.swift in Sources */,
-				4A2D23B622BB70E400494C55 /* ViewController.swift in Sources */,
 				4AE8C3D123AD2D3B005F9953 /* PoseNetInput.swift in Sources */,
 				4AA5C4BA22BBBC2A00277977 /* PoseNet.swift in Sources */,
 				4AE8C3D323AD2D8A005F9953 /* PoseNetOutput.swift in Sources */,
