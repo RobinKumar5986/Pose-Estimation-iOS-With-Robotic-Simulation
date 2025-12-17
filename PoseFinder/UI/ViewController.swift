@@ -203,9 +203,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onBluetoothButtonTapped(_ sender: UIButton) {
-//        let bluetoothScreen = BlueToothScreen()
-//        bluetoothScreen.modalPresentationStyle = .fullScreen
-//        present(bluetoothScreen, animated: true)
+        let bluetoothScreen = BlueToothScreen()
+        bluetoothScreen.modalPresentationStyle = .fullScreen
+        present(bluetoothScreen, animated: true)
     }
 }
 
@@ -283,14 +283,16 @@ extension ViewController: PoseNetDelegate {
         previewImageView.show(poses: singlePose, angles: angles, on: currentFrame)
         
         if let firstAngles = angles.first {
-            print("----- ANGLES FOR CURRENT FRAME -----")
-            for (joint, angle) in firstAngles {
-                print("\(joint): \(angle)")
-            }
-            print("------------------------------------")
+            let isFrontCamera = videoCapture.currentCameraPosition == .front
+//            print("Camera: \(isFrontCamera ? "Front (Selfie)" : "Back")")
+//            print("----- ANGLES FOR CURRENT FRAME -----")
+//            for (joint, angle) in firstAngles {
+//                print("\(joint): \(angle)")
+//            }
+//            print("------------------------------------")
             
             DispatchQueue.main.async {
-                self.simulate3D.updateWithAngles(firstAngles)
+                self.simulate3D.updateWithAngles(firstAngles,isFrontCamera: isFrontCamera )
             }
         }
     }
@@ -312,6 +314,78 @@ extension PoseBuilder {
 
         return radians * 180 / .pi
     }
+    
+    private func limbDistance(_ p1: CGPoint, _ p2: CGPoint) -> CGFloat {
+        return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2))
+    }
+
+    private func shoulderAbductionProxyAngle(hip: CGPoint, shoulder: CGPoint, wrist: CGPoint) -> CGFloat {
+        return angle(hip, shoulder, wrist)
+    }
+    
+    private func isProjectionValid(shoulder: CGPoint, elbow: CGPoint, wrist: CGPoint) -> Bool {
+        let expectedRatio: CGFloat = 1.0
+        let projectionTolerance: CGFloat = 0.2
+        
+        let upperArmLength = limbDistance(shoulder, elbow)
+        let forearmLength = limbDistance(elbow, wrist)
+        
+        guard upperArmLength > 0.0 && forearmLength > 0.0 else { return false }
+        
+        let currentRatio = forearmLength / upperArmLength
+        
+        return abs(currentRatio - expectedRatio) <= projectionTolerance
+    }
+    
+    func calculateShoulderAngleWithDepthInference(for pose: Pose) -> [String: Any] {
+        var results: [String: Any] = [:]
+
+        func getPoint(_ joint: Joint.Name) -> CGPoint? {
+            pose.joints[joint]?.position
+        }
+        
+        var leftValid = false
+        var rightValid = false
+        
+        if let h = getPoint(.leftHip), let s = getPoint(.leftShoulder),
+           let e = getPoint(.leftElbow), let w = getPoint(.leftWrist)
+        {
+            let proxyAngle = shoulderAbductionProxyAngle(hip: h, shoulder: s, wrist: w)
+            let isValid = isProjectionValid(shoulder: s, elbow: e, wrist: w)
+            let status = isValid ? "VALID" : "UNCERTAIN_DEPTH_ROTATION"
+            
+            leftValid = isValid
+            
+            results["leftShoulder_Abduction_Proxy"] = proxyAngle
+            results["leftShoulder_Abduction_Status"] = status
+            results["is_valid_left"] = isValid
+            
+    //        print("Left Shoulder YZ Proxy Angle: \(proxyAngle)°, Status: \(status)")
+        }
+        
+        if let h = getPoint(.rightHip), let s = getPoint(.rightShoulder),
+           let e = getPoint(.rightElbow), let w = getPoint(.rightWrist)
+        {
+            let proxyAngle = shoulderAbductionProxyAngle(hip: h, shoulder: s, wrist: w)
+            let isValid = isProjectionValid(shoulder: s, elbow: e, wrist: w)
+            let status = isValid ? "VALID" : "UNCERTAIN_DEPTH_ROTATION"
+            
+            rightValid = isValid
+            
+            results["rightShoulder_Abduction_Proxy"] = proxyAngle
+            results["rightShoulder_Abduction_Status"] = status
+            results["is_valid_right"] = isValid
+            
+    //        print("Right Shoulder YZ Proxy Angle: \(proxyAngle)°, Status: \(status)")
+        }
+        
+        // Ensure boolean flags are always present even if joints are missing
+        results["is_valid_left"] = leftValid
+        results["is_valid_right"] = rightValid
+        
+        return results
+    }
+    
 }
 
 extension PoseBuilder {
@@ -322,6 +396,24 @@ extension PoseBuilder {
             pose.joints[joint]?.position
         }
 
+        let shoulderInference = calculateShoulderAngleWithDepthInference(for: pose)
+        
+        // Proxy angles
+        if let leftProxyAngle = shoulderInference["leftShoulder_Abduction_Proxy"] as? CGFloat {
+            angles["leftShoulder_Abduction_Proxy"] = leftProxyAngle
+        }
+        if let rightProxyAngle = shoulderInference["rightShoulder_Abduction_Proxy"] as? CGFloat {
+            angles["rightShoulder_Abduction_Proxy"] = rightProxyAngle
+        }
+        
+        // Validity flags as 1.0 (valid) or 0.0 (invalid)
+        let leftValid = (shoulderInference["is_valid_left"] as? Bool) ?? false
+        let rightValid = (shoulderInference["is_valid_right"] as? Bool) ?? false
+        
+        angles["leftShoulder_Abduction_Valid"] = leftValid ? 1.0 : 0.0
+        angles["rightShoulder_Abduction_Valid"] = rightValid ? 1.0 : 0.0
+        
+        // Standard 2D angles
         if let h = p(.leftHip), let s = p(.leftShoulder), let e = p(.leftElbow) {
             angles["leftShoulder"] = angle(h, s, e)
         }

@@ -40,7 +40,12 @@ class VideoCapture: NSObject {
     /// The dispatch queue responsible for processing camera set up and frame capture.
     private let sessionQueue = DispatchQueue(
         label: "com.example.apple-samplecode.estimating-human-pose-with-posenet.sessionqueue")
-
+    
+    /// The current camera position (.front or .back)
+    var currentCameraPosition: AVCaptureDevice.Position {
+        return cameraPostion
+    }
+    
     /// Toggles between the front and back camera.
     public func flipCamera(completion: @escaping (Error?) -> Void) {
         sessionQueue.async {

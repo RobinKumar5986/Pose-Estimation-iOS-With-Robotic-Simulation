@@ -17,6 +17,7 @@ class BlueToothScreen: UIViewController, UITableViewDataSource, UITableViewDeleg
 
     let tableView = UITableView()
     let reloadButton = UIButton(type: .system)
+    let backButton = UIButton(type: .system)
     
     var connectedDeviceUUID: UUID? {
         return SharedPreferenceManager.shared.getSavedDeviceUUID()
@@ -24,11 +25,15 @@ class BlueToothScreen: UIViewController, UITableViewDataSource, UITableViewDeleg
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         view.backgroundColor = .systemBackground
         title = "Bluetooth"
+        navigationItem.backButtonTitle = "Back"
         bluetoothManager.bluetoothDelegate = self
+        setupBackButton()
         setupTableView()
         setupReloadButton()
+        bluetoothManager.disconnectAllDevices()
         if bluetoothManager.centralManager.state == .poweredOn {
             bluetoothManager.startScanning()
         }
@@ -61,13 +66,39 @@ class BlueToothScreen: UIViewController, UITableViewDataSource, UITableViewDeleg
         ])
     }
 
+    private func setupBackButton() {
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        backButton.setTitle(" Back", for: .normal)
+        backButton.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        backButton.tintColor = .label
+        backButton.backgroundColor = UIColor.systemGray5
+        backButton.layer.cornerRadius = 18
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        
+        backButton.layer.shadowColor = UIColor.black.cgColor
+        backButton.layer.shadowOpacity = 0.2
+        backButton.layer.shadowOffset = CGSize(width: 0, height: 1)
+        backButton.layer.shadowRadius = 2
+        
+        view.addSubview(backButton)
+        
+        NSLayoutConstraint.activate([
+            backButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 80),
+            backButton.heightAnchor.constraint(equalToConstant: 36),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12)
+        ])
+    }
 
+   
     private func setupTableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor
+                .constraint(equalTo: backButton.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -96,17 +127,31 @@ class BlueToothScreen: UIViewController, UITableViewDataSource, UITableViewDeleg
     /// table click listner
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let device = devices[indexPath.row]
+        
         if !bluetoothManager.scanningState {
             let connectVC = DeviceConnectScreen()
             connectVC.device = device
-            navigationController?.pushViewController(connectVC, animated: true)
-            tableView.deselectRow(at: indexPath, animated: true)
+            connectVC.modalPresentationStyle = .fullScreen
+            present(connectVC, animated: true) {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
         }
     }
     
     @objc private func reloadTapped() {
         if !bluetoothManager.scanningState {
             bluetoothManager.startScanning()
+        }
+    }
+    
+    @objc private func backButtonTapped() {
+        if presentingViewController != nil {
+            dismiss(animated: true, completion: nil)
+        } else if navigationController != nil {
+            navigationController?.popViewController(animated: true)
+        } else {
+            removeFromParent()
+            view.removeFromSuperview()
         }
     }
 }

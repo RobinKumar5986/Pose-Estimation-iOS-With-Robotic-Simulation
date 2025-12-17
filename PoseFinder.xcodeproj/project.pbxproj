@@ -37,6 +37,7 @@
 		6A2CE2632EEC449E009D1FCC /* BlueToothScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2CE2602EEC449E009D1FCC /* BlueToothScreen.swift */; };
 		6A2CE2652EEC44A7009D1FCC /* BLEDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2CE2642EEC44A7009D1FCC /* BLEDevice.swift */; };
 		6A5E74782EDD780E00F6D1C0 /* Simulate3D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E74772EDD780E00F6D1C0 /* Simulate3D.swift */; };
+		6AAE82302EF2780D00ED0507 /* MapperHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AAE822F2EF2780D00ED0507 /* MapperHelper.swift */; };
 		6AC7316B2ED9A1E800717146 /* light.hdr in Resources */ = {isa = PBXBuildFile; fileRef = 6AC7316A2ED9A1E800717146 /* light.hdr */; };
 		6AC9E30D2ED996CE00E62374 /* GLTFKit2 in Frameworks */ = {isa = PBXBuildFile; productRef = 6AC9E30C2ED996CE00E62374 /* GLTFKit2 */; };
 		6AD381E52EDD7AE500470345 /* PoseDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD381E42EDD7AE500470345 /* PoseDataStore.swift */; };
@@ -77,6 +78,7 @@
 		6A2CE2612EEC449E009D1FCC /* DeviceConnectScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectScreen.swift; sourceTree = "<group>"; };
 		6A2CE2642EEC44A7009D1FCC /* BLEDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEDevice.swift; sourceTree = "<group>"; };
 		6A5E74772EDD780E00F6D1C0 /* Simulate3D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simulate3D.swift; sourceTree = "<group>"; };
+		6AAE822F2EF2780D00ED0507 /* MapperHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapperHelper.swift; sourceTree = "<group>"; };
 		6AC7316A2ED9A1E800717146 /* light.hdr */ = {isa = PBXFileReference; lastKnownFileType = file; path = light.hdr; sourceTree = "<group>"; };
 		6AD381E42EDD7AE500470345 /* PoseDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseDataStore.swift; sourceTree = "<group>"; };
 		BEE6CF152B804A05BF905D20 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		4AFBF15222CC9A1300A4B11A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6AAE822F2EF2780D00ED0507 /* MapperHelper.swift */,
 				6AD381E42EDD7AE500470345 /* PoseDataStore.swift */,
 				4AA5C4B722BB9CC200277977 /* VideoCapture.swift */,
 				4ADE4C8B2346C07300FFD895 /* AVCaptureVideoOrientation+Extension.swift */,
@@ -327,6 +330,7 @@
 				6A2CE25B2EEC446A009D1FCC /* SharedPreferenceManager.swift in Sources */,
 				0DCEF2CB2416709B00ECEC99 /* PoseBuilder+Multiple.swift in Sources */,
 				0DCEF2C7241666CA00ECEC99 /* PoseBuilder.swift in Sources */,
+				6AAE82302EF2780D00ED0507 /* MapperHelper.swift in Sources */,
 				4A6C8A8223E84D1D0080886A /* GradientOverlayView.swift in Sources */,
 				4AA5C4B822BB9CC200277977 /* VideoCapture.swift in Sources */,
 				4AE8C3CF23AD2A74005F9953 /* CGImage+Extension.swift in Sources */,

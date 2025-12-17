@@ -1,10 +1,3 @@
-//
-//  BlueToothManager.swift
-//  BlueToothTest2.0
-//
-//  Created by iOS Dev on 08/12/25.
-//
-
 import CoreBluetooth
 import Foundation
 
@@ -17,10 +10,17 @@ final class BlueToothManager: NSObject {
     var deviceConnectionState: ConnectionState = .disconnected
     weak var bluetoothDelegate: BlueToothManagerDelegate?
     private var connectionTimeoutTimer: Timer?
-    private var deviceScanningTime = 4.0
+    private var writeTimeoutTimer: Timer?
+    private var deviceScanningTime = 3.0
+    var isCommandWritten: Bool = true
+    var commandSendStartTime: Date? = nil
+    var commandCount = 0
     private override init() {
         super.init()
         centralManager = CBCentralManager(delegate: self, queue: .main)
+    }
+    func getDevice(by uuid: UUID) -> BLEDevice? {
+        return discoveredDevices[uuid]
     }
 }
 /// It initiallly check for the state of the bluetooth i.e if its on , off etc.
@@ -176,7 +176,9 @@ extension BlueToothManager: CBPeripheralDelegate {
 
 /// functions for manageing the connection state of the device...
 extension BlueToothManager { ///extend with this "CBCentralManagerDelegate" if not already extended
- 
+
+    
+
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         connectionTimeoutTimer?.invalidate()
 
@@ -202,6 +204,12 @@ extension BlueToothManager { ///extend with this "CBCentralManagerDelegate" if n
 
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         connectionTimeoutTimer?.invalidate()
+        if let startTime = commandSendStartTime {
+            let currentTime = Date()
+            let timeDifference = currentTime.timeIntervalSince(startTime)
+            print("Time difference since command sent: \(timeDifference) seconds")
+        }
+        print("TOTAL: Command Executed \(commandCount)")
         if let error = error {
             print("Device Disconnected Unexpectedly: \(peripheral.name ?? "Unknown") | Reason: \(error.localizedDescription)")
             deviceConnectionState = .unKnownError
@@ -209,6 +217,7 @@ extension BlueToothManager { ///extend with this "CBCentralManagerDelegate" if n
             print("Device Disconnected by User: \(peripheral.name ?? "Unknown")")
             deviceConnectionState = .disconnected
         }
+        
         SharedPreferenceManager.shared.clearConnectedDevice()
         bluetoothDelegate?.onConnectionStateChange(deviceConnectionState)
         
@@ -221,10 +230,12 @@ extension BlueToothManager {
     /// Send data to a specific characteristic of a device
     func sendData(_ data: Data, to device: BLEDevice) {
 
-        // Print raw byte data
-        let hexString = data.map { String(format: "%02X", $0) }.joined(separator: " ")
-        let binaryString = data.map { String($0, radix: 2) }.joined(separator: " ")
-        print("Sending Data → HEX: [\(hexString)]  BINARY: [\(binaryString)]")
+        writeTimeoutTimer?.invalidate()
+
+//        // Print raw byte data
+//        let hexString = data.map { String(format: "%02X", $0) }.joined(separator: " ")
+//        let binaryString = data.map { String($0, radix: 2) }.joined(separator: " ")
+//        print("Sending Data → HEX: [\(hexString)]  BINARY: [\(binaryString)]")
 
         guard let savedUUID = SharedPreferenceManager.shared.getSavedWriteCharacteristicUUID() else {
             print("ERROR: No saved write characteristic UUID")
@@ -249,8 +260,18 @@ extension BlueToothManager {
             print("ERROR: Characteristic does not support write → \(props)")
             return
         }
-
-        print("Writing \(data.count) bytes to \(characteristic.uuid.uuidString)")
+        isCommandWritten = false
+        
+        writeTimeoutTimer = Timer.scheduledTimer(withTimeInterval: 1.2, repeats: false) { [weak self] _ in
+            guard let self = self else { return }
+            if !self.isCommandWritten {
+                self.isCommandWritten = true
+            }
+        }
+        if(commandSendStartTime == nil) {
+            commandSendStartTime = Date()
+        }
+//        print("Writing \(data.count) bytes to \(characteristic.uuid.uuidString)")
         device.peripheral.writeValue(data, for: characteristic, type: .withResponse)
     }
 
@@ -282,7 +303,7 @@ extension BlueToothManager {
 }
 
 /// auto data recive
-extension BlueToothManager { /// need to implemet this "CBPeripheralDelegate" I have already done in prev extention 
+extension BlueToothManager { /// need to implemet this "CBPeripheralDelegate" I have already done in prev extention
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else { return }
         for service in services {
@@ -327,12 +348,28 @@ extension BlueToothManager { /// need to implemet this "CBPeripheralDelegate" I 
 
         print("=============================================\n")
     }
-
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         guard let data = characteristic.value else { return }
-        print("Data received: \(characteristic.uuid): \(data)")
-        if let str = String(data: data, encoding: .utf8) {
-            print("As String: \(str)")
+        
+        let hexString = data.map { String(format: "%02X", $0) }.joined(separator: " ")
+        
+        print("NOTIFICATION from \(characteristic.uuid.uuidString): \(data.count) bytes")
+        print("   HEX: \(hexString)")
+        
+        if let str = String(data: data, encoding: .utf8), !str.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            print("   TEXT: \(str)")
         }
     }
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        writeTimeoutTimer?.invalidate()
+        writeTimeoutTimer = nil
+        isCommandWritten = true
+        commandCount += 1
+        if let error = error {
+            print("Write FAILED for \(characteristic.uuid.uuidString): \(error.localizedDescription)")
+        } else {
+            print("Write SUCCESS for \(characteristic.uuid.uuidString) - Command received by device")
+        }
+    }
+
 }
