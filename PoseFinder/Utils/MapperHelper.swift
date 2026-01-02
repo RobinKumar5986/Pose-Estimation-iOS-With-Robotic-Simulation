@@ -30,43 +30,66 @@ final class MapperHelper {
         return outMin +
             (input - inMin) * (outMax - outMin) / (inMax - inMin)
     }
-    
+    //y-z plane mapper
+    static func mapLeftShoulderYZ(_ degree: Int) -> Int {
+        map(value: degree,
+            inMin: -90,
+            inMax: 180,
+            outMin: 4095,
+            outMax: 1)
+    }
     static func mapLeftSolder(_ degree: Int) -> Int {
         map(value: degree,
-            inMin: 0, inMax: 180,
-            outMin: 3600, outMax: 500)
+            inMin: 0,
+            inMax: 180,
+            outMin: 3600,
+            outMax: 500
+        )
     }
 
     static func mapRightSolder(_ degree: Int) -> Int {
         map(value: degree,
-            inMin: 180, inMax: 360,
-            outMin: 3500, outMax: 500)
+            inMin: 180,
+            inMax: 360,
+            outMin: 3500,
+            outMax: 500
+        )
     }
 
     static func mapLeftElbow(_ degree: Int) -> Int {
         map(value: degree,
-            inMin: -90, inMax: 90,
-            outMin: 3600, outMax: 500)
+            inMin: -90,
+            inMax: 90,
+            outMin: 3600,
+            outMax: 500
+        )
     }
 
     static func mapRightElbow(_ degree: Int) -> Int {
         map(value: degree,
-            inMin: -90, inMax: 90,
-            outMin: 3600, outMax: 500)
+            inMin: -90,
+            inMax: 90,
+            outMin: 3600,
+            outMax: 500
+        )
     }
 
     //movement till 45 degree only...
     static func mapRightHip(_ degree: Int) -> Int {
         map(value: degree,
-            inMin: 0, inMax: -45,
-            outMin: 1500, outMax: 500,
+            inMin: 0,
+            inMax: -45,
+            outMin: 1500,
+            outMax: 500,
         )
     }
     //movement till 45 degree only...
     static func mapLeftHip(_ degree: Int) -> Int {
         map(value: degree,
-            inMin: 0, inMax: 45,
-            outMin: 1600, outMax: 2550,
+            inMin: 0,
+            inMax: 45,
+            outMin: 1600,
+            outMax: 2550,
         )
     }
     
@@ -93,13 +116,17 @@ final class MapperHelper {
     }
     static func mapBackCameraLeftElbow(_ degree: Int) -> Int {
         map(value: degree,
-            inMin: 90, inMax: -90,
-            outMin: 3600, outMax: 500)
+            inMin: 90,
+            inMax: -90,
+            outMin: 3600,
+            outMax: 500)
     }
     static func mapBackCameraRightElbow(_ degree: Int) -> Int {
         map(value: degree,
-            inMin: 90, inMax: -90,
-            outMin: 3600, outMax: 500)
+            inMin: 90,
+            inMax: -90,
+            outMin: 3600,
+            outMax: 500)
     }
     static func mapBackCameraLeftHip(_ degree: Int) -> Int {
         let convertedDegree = map(

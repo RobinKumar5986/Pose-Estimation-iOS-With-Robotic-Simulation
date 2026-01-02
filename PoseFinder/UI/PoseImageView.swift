@@ -152,7 +152,20 @@ class PoseImageView: UIImageView {
                               at: CGPoint(x: k.x + offsetX, y: k.y + 45),
                               jointName: "rightKnee")
                 }
-
+                
+                // MARK: - Shoulder Abduction Proxy angles (YZ plane inference – shown in GREEN)
+                if let s = point(.leftShoulder), let proxyAngle = angleDict["leftShoulder_Abduction_Proxy"] {
+                    drawAngle(text: "\(Int(proxyAngle))° Lyz",
+                              at: CGPoint(x: s.x + offsetX, y: s.y + offsetY - 50),
+                              jointName: "leftShoulder",
+                              color: .green)
+                }
+                if let s = point(.rightShoulder), let proxyAngle = angleDict["rightShoulder_Abduction_Proxy"] {
+                    drawAngle(text: "\(Int(proxyAngle))° Ryz",
+                              at: CGPoint(x: s.x + offsetX, y: s.y + offsetY - 50),
+                              jointName: "rightShoulder",
+                              color: .green)
+                }
                 
             }
         }
@@ -209,12 +222,12 @@ class PoseImageView: UIImageView {
 
     func drawAngle(text: String,
                    at point: CGPoint,
-                   jointName: String?) {
-
+                   jointName: String?,
+                   color: UIColor = .red) {
         let textLayer = CATextLayer()
         textLayer.string = text
         textLayer.fontSize = 15
-        textLayer.foregroundColor = UIColor.red.cgColor
+        textLayer.foregroundColor = color.cgColor
         textLayer.backgroundColor = UIColor.clear.cgColor
         textLayer.alignmentMode = .center
         textLayer.contentsScale = UIScreen.main.scale

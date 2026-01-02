@@ -190,7 +190,9 @@ class Simulate3D: UIViewController {
         lHip = -lHip
         rHip = 180 - rHip
         rHip = -rHip
-
+        if(lShoulderAbduction > 180){
+            lShoulderAbduction = 360 - lShoulderAbduction
+        }
         sendData(
             leftShoulder: Int(rShoulder),
             leftElbow: Int(rElbow),
@@ -198,47 +200,59 @@ class Simulate3D: UIViewController {
             rightElbow: Int(lElbow),
             rightHip: Int(lHip),
             leftHip: Int(rHip),
-            isFrontCamera: isFrontCamera
+            leftSholderYZ: Int(rShoulderAbduction),
+            rightShoulderYZ: Int(lShoulderAbduction),
+            isFrontCamera: isFrontCamera,
+            isLeftValid: rightValid,
+            isRightValid: leftValid
         )
         ///note: for the robo left is right due to camera perception...
 
-        //        let leftAbductionRotation = -lShoulderAbduction
-        //        let rightAbductionRotation = rShoulderAbduction
-        //
         // MARK: - Arms (Z-axis rotation)
         applyRotationAction(
             to: leftShoulder,
-            angleDegrees: lShoulder,
-            axis: SCNVector3(0, 0, 1)
+            angleDegrees: lShoulderAbduction,
+            axis: SCNVector3(1, 0, 0)
         )
-        applyRotationAction(
-            to: leftElbow,
-            angleDegrees: lElbow,
-            axis: SCNVector3(0, 0, 1)
-        )
-
         applyRotationAction(
             to: rightShoulder,
-            angleDegrees: rShoulder,
-            axis: SCNVector3(0, 0, 1)
+            angleDegrees: rShoulderAbduction,
+            axis: SCNVector3(1, 0, 0)
         )
-        applyRotationAction(
-            to: rightElbow,
-            angleDegrees: rElbow,
-            axis: SCNVector3(0, 0, 1)
-        )
-
-        // MARK: - Legs (X-axis rotation) – matches startAnimation() perfectly
-        applyRotationAction(
-            to: leftHip,
-            angleDegrees: lHip,
-            axis: SCNVector3(0, 0, 1)
-        )
-        applyRotationAction(
-            to: rightHip,
-            angleDegrees: rHip,
-            axis: SCNVector3(0, 0, 1)
-        )
+        
+//        applyRotationAction(
+//            to: leftShoulder,
+//            angleDegrees: lShoulder,
+//            axis: SCNVector3(0, 0, 1)
+//        )
+//        applyRotationAction(
+//            to: leftElbow,
+//            angleDegrees: lElbow,
+//            axis: SCNVector3(0, 0, 1)
+//        )
+//
+//        applyRotationAction(
+//            to: rightShoulder,
+//            angleDegrees: rShoulder,
+//            axis: SCNVector3(0, 0, 1)
+//        )
+//        applyRotationAction(
+//            to: rightElbow,
+//            angleDegrees: rElbow,
+//            axis: SCNVector3(0, 0, 1)
+//        )
+//
+//        // MARK: - Legs (X-axis rotation) – matches startAnimation() perfectly
+//        applyRotationAction(
+//            to: leftHip,
+//            angleDegrees: lHip,
+//            axis: SCNVector3(0, 0, 1)
+//        )
+//        applyRotationAction(
+//            to: rightHip,
+//            angleDegrees: rHip,
+//            axis: SCNVector3(0, 0, 1)
+//        )
         //    applyRotationAction(to: leftKnee,  angleDegrees: 180 - lKnee, axis: SCNVector3(1, 0, 0))
         //    applyRotationAction(to: rightKnee, angleDegrees: 180 - rKnee, axis: SCNVector3(1, 0, 0))
     }
@@ -249,7 +263,11 @@ class Simulate3D: UIViewController {
         rightElbow: Int?,
         rightHip: Int?,
         leftHip: Int?,
-        isFrontCamera: Bool
+        leftSholderYZ: Int?,
+        rightShoulderYZ: Int?,
+        isFrontCamera: Bool,
+        isLeftValid: Bool,
+        isRightValid: Bool
     ) {
         if bluetoothManager.isCommandWritten {
             let minimumDelay: TimeInterval = 0.5
@@ -277,12 +295,15 @@ class Simulate3D: UIViewController {
                 
                 angles[13] = MapperHelper.mapBackCameraRightElbow(leftElbow ?? angles[13])
                 angles[14] = MapperHelper.mapBackCameraRightSholder(leftShoulder ?? angles[14])
-                if let rightShoulder = rightShoulder, rightShoulder > 225 {
-                    angles[4] = MapperHelper.mapBackCameraLeftHip(rightHip ?? angles[4])
-                }
-                if let leftShoulder = leftShoulder, leftShoulder > 45 {
-                    angles[12] = MapperHelper.mapBackCameraRightHip(leftHip ?? angles[12])
-                }
+//                if let rightShoulder = rightShoulder, rightShoulder > 225 {
+//                    angles[4] = MapperHelper.mapBackCameraLeftHip(rightHip ?? angles[4])
+//                }
+//                if let leftShoulder = leftShoulder, leftShoulder > 45 {
+//                    angles[12] = MapperHelper.mapBackCameraRightHip(leftHip ?? angles[12])
+//                }
+//                if let leftSholderYZ = leftSholderYZ, leftSholderYZ > 45 && leftSholderYZ < 145 && isLeftValid {
+//                    angles[7] = MapperHelper.mapLeftShoulderYZ(leftSholderYZ)
+//                }
             } else {
                 angles[6] = MapperHelper.mapLeftSolder(leftShoulder ?? angles[6])
                 angles[5] = MapperHelper.mapLeftElbow(leftElbow ?? angles[5])
@@ -290,14 +311,20 @@ class Simulate3D: UIViewController {
                 angles[13] = MapperHelper.mapRightElbow(rightElbow ?? angles[13])
                 angles[14] = MapperHelper.mapRightSolder(rightShoulder ?? angles[14])
                 
-                if let leftShoulder = leftShoulder, let leftHip = leftHip , leftShoulder >= leftHip {
-                    angles[4] = MapperHelper.mapLeftHip(leftHip)
+//                if let leftShoulder = leftShoulder, let leftHip = leftHip , leftShoulder >= leftHip {
+//                    angles[4] = MapperHelper.mapLeftHip(leftHip)
+//                }
+//                if let rightShoulder = rightShoulder,let rightHip = rightHip , rightShoulder >= (
+//                    180 + (-rightHip)
+//                ) {
+//                    angles[12] = MapperHelper.mapRightHip(rightHip )
+//                }
+                if let leftSholderYZ = leftSholderYZ, leftSholderYZ > 30 && leftSholderYZ < 150  {
+                    print("Mapped Angle ")
+                    angles[7] = MapperHelper.mapLeftShoulderYZ(leftSholderYZ)
+                    print(angles[7])
                 }
-                if let rightShoulder = rightShoulder,let rightHip = rightHip , rightShoulder >= (
-                    180 + (-rightHip)
-                ) {
-                    angles[12] = MapperHelper.mapRightHip(rightHip )
-                }
+            
             }
             
             if let commandData = encodeMultiServoCommand(angles: angles) {
@@ -324,7 +351,7 @@ class Simulate3D: UIViewController {
             }
         }
 
-        print("Sending Angles: \(angles)")
+//        print("Sending Angles: \(angles)")
 
         var data = Data()
 
